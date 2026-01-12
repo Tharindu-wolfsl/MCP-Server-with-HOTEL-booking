@@ -1,36 +1,196 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏨 AI‑Ready Hotel Booking Platform (Next.js + MCP)
 
-## Getting Started
+A **simple, modern hotel booking web application** built with **Next.js, TypeScript, MCP (Model Context Protocol)** and **Tailwind + shadcn/ui**.
 
-First, run the development server:
+This project demonstrates how to build a **hybrid REST + MCP architecture** where:
+- Traditional web users use REST APIs
+- AI agents (ChatGPT, mobile AI agents) interact via MCP
+- Both share the **same business logic**
+
+---
+
+## ✨ Features
+
+- ✅ Next.js App Router (TypeScript, strict mode)
+- 🏨 Hotel listing & booking (basic demo)
+- 🤖 Built‑in MCP server (same project)
+- 🔐 Role‑based MCP tools (USER / ADMIN)
+- 🌍 Hybrid REST + MCP APIs
+- 🎨 Tailwind CSS + shadcn/ui components
+- 📱 Ready for mobile AI agent integration
+
+---
+
+## 🧱 Architecture Overview
+
+```
+Web UI / Mobile App
+        ↓
+     REST API
+        ↓
+  Shared Services  ←→  MCP Server  ←→  AI Agents
+        ↓
+     Data Layer
+```
+
+> MCP tools directly call internal services (no REST‑to‑REST calls).
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── bookings/route.ts   # REST API
+│   │   └── mcp/route.ts        # MCP HTTP bridge
+│   ├── hotels/page.tsx         # UI
+│
+├── mcp/
+│   ├── server.ts               # MCP server
+│   ├── tools.ts                # MCP tools
+│   └── types.ts                # MCP request/response types
+│
+├── services/
+│   ├── hotel.service.ts
+│   └── booking.service.ts
+│
+├── types/
+│   └── index.ts                # Domain types
+│
+├── lib/
+│   └── jwt.ts                  # JWT utilities
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Prerequisites
+
+- Node.js 18+
+- npm / pnpm
+
+---
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 3️⃣ Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
+```
+http://localhost:3000
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔌 MCP Usage
 
-## Learn More
+### MCP Endpoint
 
-To learn more about Next.js, take a look at the following resources:
+```
+POST /api/mcp
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Example MCP Request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```json
+{
+  "method": "search_hotels",
+  "params": { "location": "Galle" },
+  "id": 1
+}
+```
 
-## Deploy on Vercel
+### Example Response
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```json
+{
+  "result": [
+    {
+      "id": "1",
+      "name": "Sea View Hotel",
+      "location": "Galle",
+      "pricePerNight": 12000
+    }
+  ],
+  "id": 1
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔐 Role‑Based MCP Tools
+
+- `search_hotels` → Public
+- `create_booking` → USER only
+
+Authorization is enforced **inside MCP tools**, not at the API layer.
+
+---
+
+## 🎨 UI Stack
+
+- **Tailwind CSS** – Utility‑first styling
+- **shadcn/ui** – Accessible UI components
+- Fully customizable and production‑ready
+
+---
+
+## 🧠 Why MCP?
+
+- No duplicated APIs
+- AI agents safely call business logic
+- One backend for web, mobile & AI
+- Fine‑grained permission control
+
+---
+
+## 🛣️ Roadmap
+
+- ⏳ PostgreSQL + Prisma
+- 🔐 JWT auth middleware for MCP
+- 💳 Payment integration
+- 📊 Admin dashboard
+- 🐳 Docker & production deployment
+
+---
+
+## 📌 Tech Stack
+
+- Next.js (App Router)
+- TypeScript
+- Model Context Protocol (MCP)
+- Tailwind CSS
+- shadcn/ui
+- Zod
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first.
+
+---
+
+## ⭐️ Support
+
+If this project helps you, consider giving it a ⭐️ on GitHub.
+
